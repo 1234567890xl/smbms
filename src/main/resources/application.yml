@@ -1,11 +1,9 @@
-# �˿�
 server:
   port: 8082
   tomcat:
     uri-encoding: utf-8
 
 spring:
-  # ���ݿ�����
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/smbms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,19 +13,18 @@ spring:
     max-active: 20
     max-idle: 8
     min-idle: 8
-  # Spring boot��ͼ����
+
   mvc:
     view:
       prefix: /WEB-INF/
       suffix: .jsp
-    # ��̬�ļ���������
     static-path-pattern: /static/**
-# mybatis����
+
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   config-location: classpath:config/mybatis-config.xml
 
-# ��־�ȼ�
+
 logging:
   level:
     com:
