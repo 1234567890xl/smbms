@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xl.smbms.dao.UserMapper">
+    <select id="login" resultType="User">
+		select * from smbms_user
+		where usercode = #{code}
+	</select>
+    <select id="search" resultType="User" parameterType="map">
+        select * from smbms_user
+        <where>
+            <if test="user.userName!=null and user.userName!=''">
+                and username like concat('%',#{user.userName},'%')
+            </if>
+            <if test="user.role != null and user.role.id != 0">
+                userrole = #{user.role.id}
+            </if>
+        </where>
+        limit #{start},#{size}
+    </select>
+
+    <select id="total" resultType="int" parameterType="map">
+        select count(*) from smbms_user
+        <where>
+            <if test="user.userName!=null and user.userName!=''">
+                and username like concat('%',#{user.userName},'%')
+            </if>
+            <if test="user.role != null and user.role.id != 0">
+                userrole = #{user.role.id}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="check" resultType="int" parameterType="string">
+		select count(usercode) from smbms_user
+		where usercode = #{userCode}
+	</select>
+
+    <insert id="insert"  parameterType="User"  >
+
+	 	insert  into `smbms_user`(`id`,`userCode`,`userName`,`userPassword`,`gender`,`birthday`,`phone`,`address`)
+	 	values (null,#{userCode},#{userName},#{userPassword},#{gender},#{birthday},#{phone},#{address})
+	</insert>
+
+    <select id="getAllRoles" resultType="Role">
+		select * from smbms_role
+	</select>
+
+    <delete id="delete" parameterType="String">
+
+		delete from smbms_user where id = #{id}
+
+	</delete>
+
+    <select id="getUserById" parameterType="string" resultType="User">
+
+		select * from smbms_user where id = #{id}
+
+
+	</select>
+
+    <update id="update" parameterType="User">
+		update smbms_user
+		set
+			usercode = #{userCode},
+			username = #{userName},
+			gender = #{gender},
+			birthday = #{birthday},
+			phone = #{phone},
+			address = #{address}
+		where id = #{id}
+	</update>
+</mapper>
+
